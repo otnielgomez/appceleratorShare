@@ -90,6 +90,8 @@
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>
+    <property name="twitter.consumerKey">Y4w1qNFI1ROfaml4YGhI1BCZf</property>
+    <property name="twitter.consumerSecret">IqdmEbkA5FKYluZcFcbQelFwgQCb2zP6u5E4EBZcCpezTQdwEJ</property>
     <property name="appc-app-id" type="string">55f1a9b628d4b8ba6586be30</property>
     <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
     <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>

@@ -1,7 +1,7 @@
 <Alloy>
-	<Window backgroundColor="white">
-        <LoginButton id="fbLogin" module="facebook" top="25" />
+	<Window id="winIndex">
         <LikeButton id="fbLike" module="facebook" top="100" />
         <Button id="buttonShare" top="130" title="Share URL with Share Dialog" left="10" right="10" height="40" />
+        <Button id="buttonTweet" top="170" title="TWITTER" left="10" right="10" height="40" />
     </Window>
 </Alloy>
