@@ -24,3 +24,11 @@ overrode the settings with other TSS, XML, or JS settings:
 }
 
 */
+LikeButton : {
+	objectId: 'https://www.facebook.com/SorteosTec'
+},
+"#buttonShareFB" : {
+	height : "20dp",
+	width : "90dp",
+	backgroundImage : '/images/compartir.png'
+}

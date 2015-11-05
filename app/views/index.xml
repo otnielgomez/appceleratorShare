@@ -1,7 +1,33 @@
 <Alloy>
-	<Window id="winIndex">
-        <LikeButton id="fbLike" module="facebook" top="100" />
-        <Button id="buttonShare" top="130" title="Share URL with Share Dialog" left="10" right="10" height="40" />
-        <Button id="buttonTweet" top="170" title="TWITTER" left="10" right="10" height="40" />
+    <Window id="winIndex" backgroundColor="white" >
+        <LeftNavButton platform="ios">
+            <View id="btnMenuIOS">
+                <Label text="LEFT" />
+            </View>
+        </LeftNavButton>
+        <TitleControl platform="ios">
+            <Label text="Aqui va el titulo" />
+        </TitleControl>
+        <RightNavButton platform="ios">
+            <Label text="Right" />
+        </RightNavButton>
+        <View height="Ti.UI.FILL" layout="vertical" backgroundColor="green">
+            <View width="100%" height="100dp">
+                <LikeButton id="fbLike" module="facebook" />
+            </View>
+            <View width="100%" height="Ti.UI.SIZE">
+                <Button id="buttonShareFB" />
+            </View>
+            <View width="100%" height="Ti.UI.SIZE" layout="vertical">
+                <TextArea id="textoTweet" width="90%" maxLength="120" />
+                <Button id="buttonTweet" title="Enviar Tweet" left="10" right="10" height="40" />
+            </View>
+        </View>
+        <!--View id="viewContenedorTwitter" zIndex="2" height="Ti.UI.FILL"-->
+        <View id="viewContenedorTwitter" zIndex="-1" height="10" width="10">
+            <Button id="cierraVentanaTwitter" title="(X)" color="red" top="-5" zIndex="1000" right="-5" />
+            <View backgroundColor="black" opacity="0.6" height="Ti.UI.FILL" />
+            <View id="viewTwitter" width="95%" top="10" bottom="10" opacity="1" backgroundColor="white" />
+        </View>
     </Window>
 </Alloy>

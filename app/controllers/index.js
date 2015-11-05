@@ -1,34 +1,21 @@
-$.fbLike.objectId = "http://www.facebook.com/SorteosTec";
 if (OS_ANDROID) {
-    $.index.fbProxy = Alloy.Globals.Facebook.createActivityWorker({
-        lifecycleContainer : $.index
+    $.winIndex.fbProxy = Alloy.Globals.Facebook.createActivityWorker({
+        lifecycleContainer : $.winIndex
     });
 }
-$.buttonShare.addEventListener('click', function() {
-    if (Alloy.Globals.Facebook.getCanPresentShareDialog()) {
-        Alloy.Globals.Facebook.presentShareDialog({
-            link : 'https://www.sorteostec.org/secciones/14-1er-premio/',
-            name : 'Residencia en Nuevo León',
-            description : "Incluye: $1'000,000.00 para que los disfrutes en lo que tú quieras. Mercedes Benz CLA 1 CGI Sport 2015. Mercedes Benz ML 350 CGI Exclusive 2015.",
-            caption : "Valor Total: $30'000,000",
-            picture : 'https://www.sorteostec.org/imagenes/contents/201562595218573.jpg'
-        });
-    } else {
-        Alloy.Globals.Facebook.presentWebShareDialog({
-            link : 'https://www.sorteostec.org/secciones/14-1er-premio/',
-            name : 'Residencia en Nuevo León',
-            description : "Incluye: $1'000,000.00 para que los disfrutes en lo que tú quieras. Mercedes Benz CLA 1 CGI Sport 2015. Mercedes Benz ML 350 CGI Exclusive 2015.",
-            caption : "Valor Total: $30'000,000",
-            picture : 'https://www.sorteostec.org/imagenes/contents/201562595218573.jpg'
-        });
-    }
+$.buttonShareFB.addEventListener('click', function() {
+    var url = 'http://gomezz.info/';
+    var nombre = 'Prueba de Otniel Gomez';
+    var descripcion = "Prueba de share de facebook desde appcelerator con funcion global, se esta probando el sitio de Otniel Gomez.";
+    var subtitulo = "El url es http://gomezz.info/";
+    var imagen = 'http://www.menucool.com/slider/jsImgSlider/images/image-slider-2.jpg';
+    Alloy.Globals.ShareFB(url, nombre, descripcion, subtitulo, imagen);
 });
 
 /*
  * Ti.App.Properties.getString('twitter.consumerSecret')
  * Ti.App.Properties.getString('twitter.consumerKey')
  */
-
 var accessToken = null;
 var accessTokenSecret = null;
 ///////////LOAD ACCESS TOKEN
@@ -59,7 +46,6 @@ loadAccessToken = function(pService) {
 };
 ///////////SAVE ACCESS TOKEN
 saveAccessToken = function(pService) {
-    Ti.API.info('Saving access token [' + pService + '].');
     var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, pService + '.config');
     if (file == null) {
         file = Ti.Filesystem.createFile(Ti.Filesystem.applicationDataDirectory, pService + '.config');
@@ -68,31 +54,28 @@ saveAccessToken = function(pService) {
         accessToken : accessToken,
         accessTokenSecret : accessTokenSecret
     }));
-    Ti.API.info('Saving access token: done.');
 };
 
 ///////////CLEAR ACCESS TOKEN
-/*
 clearAccessToken = function(pService) {
-var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, pService + '.config');
-if (file == null){
-file = Ti.Filesystem.createFile(Ti.Filesystem.applicationDataDirectory, pService + '.config');
-}
-file.write(JSON.stringify({
-accessToken: null,
-accessTokenSecret: null
-}));
-accessToken = null;
-accessTokenSecret = null;
+    var file = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, pService + '.config');
+    if (file == null) {
+        file = Ti.Filesystem.createFile(Ti.Filesystem.applicationDataDirectory, pService + '.config');
+    }
+    file.write(JSON.stringify({
+        accessToken : null,
+        accessTokenSecret : null
+    }));
+    accessToken = null;
+    accessTokenSecret = null;
 };
-*/
 var Codebird = require("codebird");
 var cb = new Codebird();
 cb.setConsumerKey(Ti.App.Properties.getString('twitter.consumerKey'), Ti.App.Properties.getString('twitter.consumerSecret'));
 ///////////SET TWEET FUNCTION
 function setTweet() {
     cb.__call("statuses_update", {
-        "status" : "Whohoo, I just tweeted!"
+        "status" : "Test form @appcelerator."
     }, function(reply) {
         ///////////INSPECT OBJECT
         function inspeccionar(obj) {
@@ -111,13 +94,27 @@ function setTweet() {
             }
             return msg;
         }
+
         if (reply.httpstatus == 200)
             alert("Tweet exitoso!!!");
         else
             alert(reply.errors[0].message);
     });
 }
+
+function abreVistaTwitter(){
+    var width = "100%";
+    var height = $.winIndex.toImage().getHeight();
+    $.viewContenedorTwitter.zIndex = 1000;
+    $.viewContenedorTwitter.animate({
+        height : height,
+        width : width,
+        duration : 200
+    });
+}
+
 $.buttonTweet.addEventListener('click', function(e) {
+    abreVistaTwitter();    
     ///////////  SET TWEET ///////////
     //clearAccessToken('twitter');
     loadAccessToken('twitter');
@@ -128,9 +125,7 @@ $.buttonTweet.addEventListener('click', function(e) {
         cb.__call("oauth_requestToken", {
             oauth_callback : "oob"
         }, function(reply) {
-            // stores it
             cb.setToken(reply.oauth_token, reply.oauth_token_secret);
-            // gets the authorize screen URL
             cb.__call("oauth_authorize", {}, function(auth_url) {
                 var window = Titanium.UI.createWebView({
                     height : "100%",
@@ -139,27 +134,33 @@ $.buttonTweet.addEventListener('click', function(e) {
                 });
                 closeLabel = Ti.UI.createLabel({
                     textAlign : 'right',
+                    color : 'red',
                     font : {
                         fontWeight : 'bold',
-                        fontSize : '12pt'
                     },
                     text : '(X)',
-                    top : 0,
+                    top : -10,
+                    zIndex : 1000,
                     right : 0,
                     height : 14
                 });
-                window.add(closeLabel);
-                closeLabel.addEventListener('click', function(e) {
-                    $.winIndex.remove(window);
+                //window.add(closeLabel);
+                $.cierraVentanaTwitter.addEventListener('click', function(e) {
+                //closeLabel.addEventListener('click', function(e) {
+                    clearAccessToken('twitter');
+                    $.viewContenedorTwitter.zIndex = -1;
+                    $.viewContenedorTwitter.height = 10;
+                    $.viewContenedorTwitter.width = 10;
+                    $.viewTwitter.remove(window);
                 });
                 var destroyAuthorizeUI = function() {
                     // remove the UI
                     try {
                         window.removeEventListener('load', authorizeUICallback);
-                        $.winIndex.remove(window);
+                        $.viewTwitter.remove(window);
                         window = null;
                     } catch(ex) {
-                        Ti.API.info('Cannot destroy the authorize UI. Ignoring.');
+                        console.log('Cannot destroy the authorize UI. Ignoring.');
                     }
                 };
                 var authorizeUICallback = function(e) {
@@ -179,10 +180,15 @@ $.buttonTweet.addEventListener('click', function(e) {
                     }
                 };
                 window.addEventListener('load', authorizeUICallback);
-                $.winIndex.add(window);
+                $.viewTwitter.add(window);
             });
         });
     }
 });
 
-$.winIndex.open();
+if (OS_ANDROID) {
+    $.winIndex.open();
+} else {
+    Alloy.Globals.navigationWindow.window = $.winIndex;
+    Alloy.Globals.navigationWindow.open();
+}
