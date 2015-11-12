@@ -1,6 +1,6 @@
 <Alloy>
-    <Window id="winIndex" backgroundColor="white" >
-        <LeftNavButton platform="ios">
+    <!--Window id="winIndex" layout="vertical" backgroundColor="white"-->
+        <!--LeftNavButton platform="ios">
             <View id="btnMenuIOS">
                 <Label text="LEFT" />
             </View>
@@ -23,11 +23,10 @@
                 <Button id="buttonTweet" title="Enviar Tweet" left="10" right="10" height="40" />
             </View>
         </View>
-        <!--View id="viewContenedorTwitter" zIndex="2" height="Ti.UI.FILL"-->
         <View id="viewContenedorTwitter" zIndex="-1" height="10" width="10">
             <Button id="cierraVentanaTwitter" title="(X)" color="red" top="-5" zIndex="1000" right="-5" />
             <View backgroundColor="black" opacity="0.6" height="Ti.UI.FILL" />
             <View id="viewTwitter" width="95%" top="10" bottom="10" opacity="1" backgroundColor="white" />
-        </View>
-    </Window>
+        </View-->
+    <!--/Window-->
 </Alloy>

@@ -14,6 +14,7 @@
 if (OS_IOS) {
     Alloy.Globals.navigationWindow = Ti.UI.iOS.createNavigationWindow();
 }
+/*
 Alloy.Globals.Facebook = require('facebook');
 Alloy.Globals.ShareFB = function(url, nombre, descripcion, subtitulo, imagen){
     if (Alloy.Globals.Facebook.getCanPresentShareDialog()) {
@@ -34,3 +35,4 @@ Alloy.Globals.ShareFB = function(url, nombre, descripcion, subtitulo, imagen){
         });
     }
 };
+*/
